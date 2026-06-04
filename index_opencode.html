@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单向历 | 丙午年 癸巳月 己酉日</title>
+    <!-- Google Fonts for Serif Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f5f5f7;
+            --card-bg: #fafafa;
+            --text-main: #111111;
+            --text-muted: #555555;
+            --accent: #9c27b0;
+            --accent-glow: rgba(156, 39, 176, 0.15);
+            --gold: #c5a880;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --metal-bar: #333333;
+            --metal-screw: #888888;
+            --paper-shadow: 0 30px 60px rgba(0,0,0,0.08), 0 15px 30px rgba(0,0,0,0.05);
+            --transition-speed: 0.3s;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f1012;
+            --card-bg: #16171a;
+            --text-main: #e2e4e9;
+            --text-muted: #9ba1ad;
+            --accent: #e040fb;
+            --accent-glow: rgba(224, 64, 251, 0.25);
+            --gold: #d4af37;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --metal-bar: #1e1e1e;
+            --metal-screw: #555555;
+            --paper-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+            position: relative;
+        }
+
+        /* Subtle animated background grid/glow */
+        .background-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, rgba(0,0,0,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            pointer-events: none;
+            filter: blur(40px);
+            animation: breathe 8s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* Theme Toggle & Toolbar */
+        .toolbar {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+        }
+
+        .btn-icon {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .btn-icon:hover {
+            background-color: var(--border-color);
+            transform: scale(1.05);
+        }
+
+        /* The Calendar Container */
+        .calendar-wrapper {
+            position: relative;
+            z-index: 2;
+            perspective: 1000px;
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        /* Daily Calendar Card */
+        .calendar-card {
+            background-color: var(--card-bg);
+            border-radius: 4px;
+            box-shadow: var(--paper-shadow);
+            position: relative;
+            width: 100%;
+            min-height: 580px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), background-color var(--transition-speed);
+            transform-style: preserve-3d;
+        }
+
+        /* Tear bar simulation */
+        .tear-bar {
+            height: 35px;
+            background: linear-gradient(to bottom, #444, #222);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            border-bottom: 2px solid #111;
+            z-index: 5;
+        }
+
+        .tear-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 100%);
+        }
+
+        .screw {
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle at 3px 3px, #aaa 0%, #555 70%, #222 100%);
+            border-radius: 50%;
+            box-shadow: inset -1px -1px 2px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        
+        .screw::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 1.5px;
+            background-color: #333;
+            top: 4.25px;
+            left: 2px;
+            transform: rotate(45deg);
+        }
+
+        /* Perforated lines below tear bar */
+        .perforation {
+            height: 4px;
+            background-image: radial-gradient(circle, var(--bg-color) 1.5px, transparent 1.5px);
+            background-size: 8px 4px;
+            background-repeat: repeat-x;
+            width: 100%;
+            position: absolute;
+            top: 35px;
+            left: 0;
+            z-index: 4;
+        }
+
+        /* Card Content Area */
+        .card-body {
+            padding: 2.5rem 2rem 2rem 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* Date Header */
+        .date-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .solar-date {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--text-main);
+        }
+
+        .day-week {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* BaZi Pillars (Interative Badge) */
+        .bazi-pillars-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+        }
+
+        .bazi-pillars-container:hover {
+            transform: translateY(-2px);
+            border-color: var(--gold);
+            background-color: rgba(197, 168, 128, 0.05);
+        }
+
+        .pillar-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .pillar-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            font-weight: 300;
+        }
+
+        .pillar-value {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: var(--text-main);
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            border: 1px solid var(--border-color);
+            padding: 8px 4px;
+            border-radius: 2px;
+            background-color: rgba(0, 0, 0, 0.02);
+            transition: all 0.2s;
+        }
+        
+        [data-theme="dark"] .pillar-value {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .bazi-pillars-container:hover .pillar-value {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* Giant Date Display */
+        .giant-day {
+            font-family: 'Playfair Display', serif;
+            font-size: 7rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.02);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .lunar-info {
+            font-size: 1rem;
+            color: var(--text-muted);
+            letter-spacing: 0.2em;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+        }
+
+        /* Separator line */
+        .divider {
+            width: 40px;
+            height: 2px;
+            background-color: var(--text-main);
+            margin-bottom: 2.5rem;
+            opacity: 0.8;
+        }
+
+        /* Suitable & Taboo */
+        .yi-ji-panel {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            margin-bottom: 2.5rem;
+            gap: 1.5rem;
+        }
+
+        .yi-box, .ji-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .circle-tag {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            border: 1px solid var(--text-main);
+        }
+
+        .yi-box .circle-tag {
+            background-color: var(--text-main);
+            color: var(--card-bg);
+        }
+
+        .ji-box .circle-tag {
+            background-color: transparent;
+            color: var(--text-main);
+        }
+
+        .yi-ji-content {
+            font-size: 0.85rem;
+            text-align: center;
+            color: var(--text-main);
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+
+        .yi-ji-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+            display: block;
+        }
+
+        /* The Quote of the Day */
+        .quote-container {
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            margin-top: auto;
+        }
+
+        .quote-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+            font-weight: 400;
+            word-wrap: break-word;
+        }
+
+        .quote-author {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            display: block;
+            font-weight: 300;
+        }
+
+        /* Tear-off animation trigger */
+        .tear-off-area {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-tear {
+            background-color: var(--text-main);
+            color: var(--card-bg);
+            border: none;
+            padding: 12px 28px;
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .btn-tear:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+
+        .btn-tear:active {
+            transform: translateY(0);
+        }
+
+        .tear-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        /* Tear Animation Classes */
+        .tearing {
+            animation: tearOff 0.8s forwards ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes tearOff {
+            0% {
+                transform: rotate(0deg) translateY(0);
+                opacity: 1;
+            }
+            30% {
+                transform: rotate(-3deg) translateY(5px);
+                opacity: 0.95;
+            }
+            100% {
+                transform: rotate(-15deg) translate(-200px, 600px);
+                opacity: 0;
+            }
+        }
+
+        /* BaZi Analysis Modal overlay */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            transform: translateY(30px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 2.5rem 2rem;
+            position: relative;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--text-main);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        /* Details in modal */
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 1.5rem 0 0.75rem 0;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 14px;
+            background-color: var(--gold);
+            display: inline-block;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+        }
+
+        .detail-val {
+            font-weight: 400;
+            color: var(--text-main);
+            text-align: right;
+            max-width: 70%;
+        }
+
+        /* Five elements gauge */
+        .gauge-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 1rem 0 2rem 0;
+        }
+
+        .gauge-bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .gauge-bar-bg {
+            width: 14px;
+            height: 100px;
+            background-color: var(--border-color);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gauge-bar-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            border-radius: 10px;
+            transition: height 1s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .element-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        /* Color classes for elements */
+        .color-fire { background-color: #f44336; color: #f44336; }
+        .color-earth { background-color: #8d6e63; color: #8d6e63; }
+        .color-metal { background-color: #ffb300; color: #ffb300; }
+        .color-water { background-color: #2196f3; color: #2196f3; }
+        .color-wood { background-color: #4caf50; color: #4caf50; }
+
+        /* Dryer Index widget */
+        .dryer-panel {
+            background-color: var(--border-color);
+            border-radius: 4px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .dryer-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .dryer-val {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #ff9800;
+            font-size: 1.2rem;
+        }
+
+        .tip-box {
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            background-color: rgba(197, 168, 128, 0.05);
+            border-left: 2px solid var(--gold);
+            padding: 8px 12px;
+            margin-top: 1rem;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+            margin-top: 3rem;
+            z-index: 2;
+        }
+
+        /* ── Tab Navigation ── */
+        .tab-nav {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 9px 22px;
+            font-size: 0.92rem;
+            font-family: 'Noto Serif SC', serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 400;
+        }
+
+        .tab-btn:first-child { border-radius: 4px 0 0 4px; }
+        .tab-btn:last-child { border-radius: 0 4px 4px 0; }
+
+        .tab-btn.active {
+            background-color: var(--text-main);
+            color: var(--card-bg);
+            border-color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background-color: var(--border-color);
+        }
+
+        /* ── Page Containers ── */
+        .page {
+            display: none;
+            width: 100%;
+        }
+
+        .page.active { display: block; }
+
+        /* ── Personal Bazi Page ── */
+        .form-group {
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+            letter-spacing: 0.05em;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .form-row > * { flex: 1; }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .form-input:focus, .form-select:focus { border-color: var(--gold); }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--text-main);
+            color: var(--card-bg);
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Noto Serif SC', serif;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-reset {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: 'Noto Serif SC', serif;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-reset:hover { border-color: var(--text-main); color: var(--text-main); }
+
+        .saved-hint {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 0.75rem;
+            opacity: 0.7;
+            display: block;
+        }
+
+        /* ── Bazi Result ── */
+        .bazi-result {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: none;
+        }
+
+        .bazi-result.visible {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .day-master-badge {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+        }
+
+        .na-yin-tag {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-left: 0.4rem;
+            font-weight: 400;
+        }
+
+        .divider-sm {
+            width: 30px;
+            height: 1.5px;
+            background-color: var(--border-color);
+            margin: 1rem auto;
+        }
+
+        /* Interaction Card */
+        .interaction-card {
+            background-color: var(--border-color);
+            border-radius: 6px;
+            padding: 14px 16px;
+            margin: 1rem 0;
+        }
+
+        .day-type-badge {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .day-type-badge.good { background-color: #4caf50; color: white; }
+        .day-type-badge.neutral { background-color: #ff9800; color: white; }
+        .day-type-badge.bad { background-color: #f44336; color: white; }
+
+        .ten-god-display {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 0.5rem 0;
+        }
+
+        .advice-section { margin-top: 1rem; }
+
+        .advice-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+
+        .advice-icon {
+            font-weight: 700;
+            font-size: 0.85rem;
+            min-width: 20px;
+        }
+
+        .advice-icon.yi { color: #4caf50; }
+        .advice-icon.ji { color: #f44336; }
+
+        .saved-hint {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 0.75rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <div class="background-glow"></div>
+
+    <!-- Top Toolbar -->
+    <div class="toolbar">
+        <button class="btn-icon" id="theme-toggle" title="切换深浅主题">
+            <svg id="theme-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <!-- Sun Icon -->
+                <circle cx="12" cy="12" r="5"></circle>
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+        <button class="tab-btn active" id="tab-general">今日气数</button>
+        <button class="tab-btn" id="tab-personal">我的命盘</button>
+    </div>
+
+    <!-- Page: General Calendar -->
+    <div class="page active" id="page-general">
+
+    <!-- Calendar Wrapper -->
+    <div class="calendar-wrapper">
+        <div class="calendar-card" id="calendar-card">
+            
+            <!-- Metallic binding simulation -->
+            <div class="tear-bar">
+                <div class="screw"></div>
+                <div class="screw"></div>
+            </div>
+            
+            <div class="perforation"></div>
+
+            <div class="card-body">
+                <!-- Solar Header -->
+                <div class="date-header">
+                    <span class="solar-date">2026.06.04</span>
+                    <span class="day-week">星期四 · THURSDAY</span>
+                </div>
+
+                <!-- Giant Date -->
+                <div class="giant-day">04</div>
+
+                <!-- Lunar Info -->
+                <div class="lunar-info">农历丙午年四月十九</div>
+
+                <!-- Interactive BaZi Pillars -->
+                <div class="bazi-pillars-container" id="bazi-pillars" title="查看今日八字深度解析">
+                    <div class="pillar-box">
+                        <span class="pillar-label">年柱</span>
+                        <span class="pillar-value">丙午</span>
+                    </div>
+                    <div class="pillar-box">
+                        <span class="pillar-label">月柱</span>
+                        <span class="pillar-value">癸巳</span>
+                    </div>
+                    <div class="pillar-box">
+                        <span class="pillar-label">日柱</span>
+                        <span class="pillar-value">己酉</span>
+                    </div>
+                    <div class="pillar-box">
+                        <span class="pillar-label">时柱</span>
+                        <span class="pillar-value" style="color: var(--text-muted); opacity: 0.5;">吉时</span>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Suitable & Taboo -->
+                <div class="yi-ji-panel">
+                    <div class="yi-box">
+                        <div class="circle-tag">宜</div>
+                        <div class="yi-ji-content">
+                            <span>倾听与创作</span>
+                            <span class="yi-ji-desc">食神泄秀，灵感爆发</span>
+                        </div>
+                    </div>
+                    <div class="ji-box">
+                        <div class="circle-tag">忌</div>
+                        <div class="yi-ji-content">
+                            <span>急躁下决策</span>
+                            <span class="yi-ji-desc">燥烈当头，防怒破财</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quote Section -->
+                <div class="quote-container">
+                    <p class="quote-text">“唯有创作，能在这喧嚣燥热的世界里，下一场无声的甘霖。”</p>
+                    <span class="quote-author">—— 选自今日「食神生财，水火既济」气象</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Tear-off Button Area -->
+        <div class="tear-off-area">
+            <button class="btn-tear" id="tear-btn">撕去今日</button>
+            <span class="tear-hint">撕下今日，静待来日</span>
+        </div>
+    </div>
+
+    <div class="footer-note">本分析基于子平命理经典，仅限于学术研究与日常娱乐</div>
+
+    <!-- Modal for BaZi Analysis details -->
+    <div class="modal" id="bazi-modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-modal">&times;</span>
+            <h3 class="modal-title">今日八字气数深度解析</h3>
+            
+            <div class="dryer-panel">
+                <span class="dryer-title">全局干燥指数 (Dryness Index)</span>
+                <span class="dryer-val">85% (燥热)</span>
+            </div>
+
+            <div class="section-title">今日星干支与体用</div>
+            <div class="detail-row">
+                <span class="detail-label">年柱：丙午 (天上火)</span>
+                <span class="detail-val">正印坐禄，火烈无情</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">月柱：癸巳 (长流水)</span>
+                <span class="detail-val">癸水偏财高透，调候用神</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">日柱：己酉 (大驿土)</span>
+                <span class="detail-val">田园之土坐酉金食神，泄秀生财</span>
+            </div>
+
+            <div class="section-title">五行能量分布</div>
+            <div class="gauge-container">
+                <div class="gauge-bar-wrapper">
+                    <div class="gauge-bar-bg">
+                        <div class="gauge-bar-fill color-fire" style="height: 0%;"></div>
+                    </div>
+                    <span class="element-label">火 (旺)</span>
+                </div>
+                <div class="gauge-bar-wrapper">
+                    <div class="gauge-bar-bg">
+                        <div class="gauge-bar-fill color-earth" style="height: 0%;"></div>
+                    </div>
+                    <span class="element-label">土 (强)</span>
+                </div>
+                <div class="gauge-bar-wrapper">
+                    <div class="gauge-bar-bg">
+                        <div class="gauge-bar-fill color-metal" style="height: 0%;"></div>
+                    </div>
+                    <span class="element-label">金 (相)</span>
+                </div>
+                <div class="gauge-bar-wrapper">
+                    <div class="gauge-bar-bg">
+                        <div class="gauge-bar-fill color-water" style="height: 0%;"></div>
+                    </div>
+                    <span class="element-label">水 (弱)</span>
+                </div>
+                <div class="gauge-bar-wrapper">
+                    <div class="gauge-bar-bg">
+                        <div class="gauge-bar-fill color-wood" style="height: 0%;"></div>
+                    </div>
+                    <span class="element-label">木 (缺)</span>
+                </div>
+            </div>
+
+            <div class="section-title">气数与调候断语</div>
+            <div class="detail-row">
+                <span class="detail-label">格局</span>
+                <span class="detail-val">火土燥烈，喜金水双清</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">今日药神</span>
+                <span class="detail-val">酉金食神（泄土气，化生癸水）</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">宜做之事</span>
+                <span class="detail-val">写作、设计、灵感输出、理财规划、冥想降噪</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">需防范事</span>
+                <span class="detail-val">情绪中暑、与人发生争执、作冲动投资决策</span>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 子平细推解析：</strong>
+                今日丙午年、癸巳月、己酉日，火势炎烈，土焦易脆。幸而日支坐酉金，巳酉半合金局，食神泄秀，引通水木。金风吹拂，癸水偏财得生。今日适合以“静”制“动”，以“输出”代替“焦躁”。
+            </div>
+        </div>
+    </div>
+
+    </div><!-- /#page-general -->
+
+    <!-- Page: Personal Bazi -->
+    <div class="page" id="page-personal">
+        <div class="calendar-wrapper">
+            <div class="calendar-card" id="personal-card">
+                <div class="tear-bar">
+                    <div class="screw"></div>
+                    <div class="screw"></div>
+                </div>
+                <div class="perforation"></div>
+                <div class="card-body">
+
+                    <!-- Form Section -->
+                    <div class="form-group">
+                        <label class="form-label">出生日期</label>
+                        <div class="form-row">
+                            <input type="number" class="form-input" id="birth-year" placeholder="年" min="1900" max="2100" value="1990" style="flex:1.2;">
+                            <select class="form-select" id="birth-month" style="flex:0.8;"></select>
+                            <select class="form-select" id="birth-day" style="flex:0.8;"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">出生时辰</label>
+                        <select class="form-select" id="birth-hour">
+                            <option value="0">子时 (23:00–01:00)</option>
+                            <option value="1">丑时 (01:00–03:00)</option>
+                            <option value="2">寅时 (03:00–05:00)</option>
+                            <option value="3">卯时 (05:00–07:00)</option>
+                            <option value="4">辰时 (07:00–09:00)</option>
+                            <option value="5">巳时 (09:00–11:00)</option>
+                            <option value="6">午时 (11:00–13:00)</option>
+                            <option value="7">未时 (13:00–15:00)</option>
+                            <option value="8">申时 (15:00–17:00)</option>
+                            <option value="9">酉时 (17:00–19:00)</option>
+                            <option value="10">戌时 (19:00–21:00)</option>
+                            <option value="11">亥时 (21:00–23:00)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">性别</label>
+                        <select class="form-select" id="birth-gender">
+                            <option value="male">男</option>
+                            <option value="female">女</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" id="btn-analyze">排盘</button>
+                    <button class="btn-reset" id="btn-reset">清除数据</button>
+                    <span class="saved-hint" id="saved-hint" style="display:none;">已加载上次保存的数据</span>
+
+                    <!-- Pillars Display (clickable) -->
+                    <div class="bazi-result" id="bazi-result">
+                        <div class="divider-sm"></div>
+                        <div class="bazi-pillars-container" id="birth-pillars" title="点击查看命盘深度解析" style="cursor:pointer;margin-bottom:0.5rem;">
+                        </div>
+                        <div class="day-master-badge" id="day-master-badge" style="margin:0 auto 0.5rem auto;display:block;text-align:center;"></div>
+                        <span class="tear-hint" id="pillars-hint" style="display:block;text-align:center;">点击四柱查看详细分析</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Analysis Modal -->
+        <div class="modal" id="personal-modal">
+            <div class="modal-content">
+                <span class="close-btn" id="close-personal-modal">&times;</span>
+                <h3 class="modal-title">命盘深度解析</h3>
+
+                <div class="section-title">五行能量分布</div>
+                <div class="gauge-container">
+                    <div class="gauge-bar-wrapper">
+                        <div class="gauge-bar-bg">
+                            <div class="gauge-bar-fill color-wood" id="g-wood" style="height: 0%;"></div>
+                        </div>
+                        <span class="element-label" id="el-wood">木</span>
+                    </div>
+                    <div class="gauge-bar-wrapper">
+                        <div class="gauge-bar-bg">
+                            <div class="gauge-bar-fill color-fire" id="g-fire" style="height: 0%;"></div>
+                        </div>
+                        <span class="element-label" id="el-fire">火</span>
+                    </div>
+                    <div class="gauge-bar-wrapper">
+                        <div class="gauge-bar-bg">
+                            <div class="gauge-bar-fill color-earth" id="g-earth" style="height: 0%;"></div>
+                        </div>
+                        <span class="element-label" id="el-earth">土</span>
+                    </div>
+                    <div class="gauge-bar-wrapper">
+                        <div class="gauge-bar-bg">
+                            <div class="gauge-bar-fill color-metal" id="g-metal" style="height: 0%;"></div>
+                        </div>
+                        <span class="element-label" id="el-metal">金</span>
+                    </div>
+                    <div class="gauge-bar-wrapper">
+                        <div class="gauge-bar-bg">
+                            <div class="gauge-bar-fill color-water" id="g-water" style="height: 0%;"></div>
+                        </div>
+                        <span class="element-label" id="el-water">水</span>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">喜用神</span>
+                    <span class="detail-val" id="val-useful-god"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">纳音</span>
+                    <span class="detail-val" id="val-na-yin"></span>
+                </div>
+
+                <div class="section-title">大运排盘 <span style="font-size:0.8rem;font-weight:400;color:var(--text-muted);" id="dayun-dir"></span></div>
+                <div class="detail-row">
+                    <span class="detail-label">起运年龄</span>
+                    <span class="detail-val" id="val-start-age"></span>
+                </div>
+                <div id="dayun-cycles" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:0.5rem;"></div>
+
+                <div class="section-title">今日流日互动</div>
+                <div style="margin-bottom:0.5rem;">
+                    <span class="day-type-badge" id="day-type-badge"></span>
+                </div>
+                <div class="ten-god-display" id="ten-god-display" style="font-size:1.15rem;font-weight:700;color:var(--gold);margin:0.5rem 0;"></div>
+                <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;" id="interaction-desc"></div>
+
+                <div class="section-title">今日专属建议</div>
+                <div class="advice-section" id="advice-section"></div>
+
+                <div class="tip-box" id="personal-tip" style="margin-top:1.5rem;"></div>
+            </div>
+        </div>
+
+        <div class="footer-note">本分析基于子平命理经典，仅限于学术研究与日常娱乐</div>
+    </div><!-- /#page-personal -->
+
+    <script>
+        // Web Audio API Synthesizer for Paper Tearing Sound
+        function playTearSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                if (!ctx) return;
+                
+                const sampleRate = ctx.sampleRate;
+                const duration = 0.5; // seconds
+                const bufferSize = sampleRate * duration;
+                const buffer = ctx.createBuffer(1, bufferSize, sampleRate);
+                const data = buffer.getChannelData(0);
+                
+                // White noise with a custom envelopes to simulate rustling paper
+                for (let i = 0; i < bufferSize; i++) {
+                    const noise = Math.random() * 2 - 1;
+                    const time = i / sampleRate;
+                    
+                    // Create crackling/ripping variations
+                    const crackle = Math.sin(time * 300) * Math.sin(time * 1500) > 0.8 ? 0.3 : 0.05;
+                    data[i] = noise * crackle;
+                }
+                
+                const noiseNode = ctx.createBufferSource();
+                noiseNode.buffer = buffer;
+                
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.value = 1200;
+                filter.Q.value = 1.5;
+                
+                const gainNode = ctx.createGain();
+                gainNode.gain.setValueAtTime(0.4, ctx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+                
+                // Add minor low frequency thuds for tension
+                const osc = ctx.createOscillator();
+                osc.type = 'sawtooth';
+                osc.frequency.value = 90;
+                
+                const oscGain = ctx.createGain();
+                oscGain.gain.setValueAtTime(0.15, ctx.currentTime);
+                oscGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+                
+                noiseNode.connect(filter);
+                filter.connect(gainNode);
+                
+                osc.connect(oscGain);
+                
+                gainNode.connect(ctx.destination);
+                oscGain.connect(ctx.destination);
+                
+                noiseNode.start();
+                osc.start();
+                noiseNode.stop(ctx.currentTime + duration);
+                osc.stop(ctx.currentTime + duration);
+            } catch (e) {
+                console.error("Audio Context failed: ", e);
+            }
+        }
+
+        // DOM Elements
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const calendarCard = document.getElementById('calendar-card');
+        const tearBtn = document.getElementById('tear-btn');
+        const baziPillars = document.getElementById('bazi-pillars');
+        const baziModal = document.getElementById('bazi-modal');
+        const closeModal = document.getElementById('close-modal');
+
+        // Theme Toggle Logic
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.body.removeAttribute('data-theme');
+                themeIcon.innerHTML = `
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                `;
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeIcon.innerHTML = `
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                `;
+            }
+        });
+
+        // Tear Card Logic
+        tearBtn.addEventListener('click', () => {
+            playTearSound();
+            calendarCard.classList.add('tearing');
+            tearBtn.disabled = true;
+            tearBtn.textContent = "已撕去";
+            tearBtn.style.opacity = "0.5";
+            
+            // Create a secondary background card to look like next day
+            setTimeout(() => {
+                calendarCard.style.display = 'none';
+                
+                // Re-create a placeholder card
+                const wrapper = document.querySelector('.calendar-wrapper');
+                const nextCard = document.createElement('div');
+                nextCard.className = 'calendar-card';
+                nextCard.style.minHeight = '580px';
+                nextCard.style.display = 'flex';
+                nextCard.style.justifyContent = 'center';
+                nextCard.style.alignItems = 'center';
+                nextCard.style.padding = '2rem';
+                nextCard.style.textAlign = 'center';
+                nextCard.style.border = '1px solid var(--border-color)';
+                nextCard.style.boxShadow = 'var(--paper-shadow)';
+                
+                nextCard.innerHTML = `
+                    <div class="card-body" style="justify-content: center; gap: 2rem;">
+                        <h2 style="font-size: 1.8rem; font-weight: 700; color: var(--gold);">静待明日</h2>
+                        <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.8;">
+                            “时如秤锤，轻重自在人心。”<br>
+                            撕下的是过往，留下的是当下的修行。
+                        </p>
+                        <div class="divider" style="margin: 0 auto;"></div>
+                        <span style="font-size: 0.8rem; color: var(--text-muted); opacity: 0.6;">明天是：丙午年 癸巳月 庚戌日</span>
+                    </div>
+                `;
+                wrapper.insertBefore(nextCard, wrapper.firstChild);
+            }, 800);
+        });
+
+        // Modal Logic
+        baziPillars.addEventListener('click', () => {
+            baziModal.classList.add('active');
+            
+            // Animate element fills
+            setTimeout(() => {
+                document.querySelector('.color-fire').style.height = '85%';   // Fire: 85%
+                document.querySelector('.color-earth').style.height = '70%';  // Earth: 70%
+                document.querySelector('.color-metal').style.height = '45%';  // Metal: 45%
+                document.querySelector('.color-water').style.height = '20%';  // Water: 20%
+                document.querySelector('.color-wood').style.height = '5%';    // Wood: 5% (Absent)
+            }, 100);
+        });
+
+        closeModal.addEventListener('click', () => {
+            baziModal.classList.remove('active');
+            
+            // Reset height
+            document.querySelectorAll('.gauge-bar-fill').forEach(bar => {
+                bar.style.height = '0%';
+            });
+        });
+
+        // Click outside modal content to close
+        baziModal.addEventListener('click', (e) => {
+            if (e.target === baziModal) {
+                closeModal.click();
+            }
+        });
+
+        // ============================================================
+        //  PERSONAL BAZI PAGE LOGIC
+        // ============================================================
+
+        // ── Core Data ──
+        const STEMS      = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+        const BRANCHES   = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+        const ZODIAC     = ['鼠','牛','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪'];
+        const STEM_ELEM  = ['木','木','火','火','土','土','金','金','水','水'];
+        const BRAN_ELEM  = ['水','土','木','木','土','火','火','土','金','金','土','水'];
+        const STEM_YY    = [1,0,1,0,1,0,1,0,1,0]; // 1=阳 0=阴
+
+        const NAYIN = [
+            '海中金','海中金','炉中火','炉中火','大林木','大林木',
+            '路旁土','路旁土','剑锋金','剑锋金','山头火','山头火',
+            '涧下水','涧下水','城头土','城头土','白蜡金','白蜡金',
+            '杨柳木','杨柳木','泉中水','泉中水','屋上土','屋上土',
+            '霹雳火','霹雳火','松柏木','松柏木','长流水','长流水',
+            '沙中金','沙中金','山下火','山下火','平地木','平地木',
+            '壁上土','壁上土','金箔金','金箔金','覆灯火','覆灯火',
+            '天河水','天河水','大驿土','大驿土','钗钏金','钗钏金',
+            '桑柘木','桑柘木','大溪水','大溪水','沙中土','沙中土',
+            '天上火','天上火','石榴木','石榴木','大海水','大海水'
+        ];
+
+        const ELEM_GEN  = { '木':'火','火':'土','土':'金','金':'水','水':'木' };
+        const ELEM_KILL = { '木':'土','土':'水','水':'火','火':'金','金':'木' };
+
+        const JIEQI = [
+            { m: 2, d: 4, bzi: 2  }, // 立春→寅
+            { m: 3, d: 6, bzi: 3  }, // 惊蛰→卯
+            { m: 4, d: 5, bzi: 4  }, // 清明→辰
+            { m: 5, d: 6, bzi: 5  }, // 立夏→巳
+            { m: 6, d: 6, bzi: 6  }, // 芒种→午
+            { m: 7, d: 7, bzi: 7  }, // 小暑→未
+            { m: 8, d: 8, bzi: 8  }, // 立秋→申
+            { m: 9, d: 8, bzi: 9  }, // 白露→酉
+            { m:10, d: 8, bzi:10  }, // 寒露→戌
+            { m:11, d: 7, bzi:11  }, // 立冬→亥
+            { m:12, d: 7, bzi: 0  }, // 大雪→子
+            { m: 1, d: 6, bzi: 1  }, // 小寒→丑
+        ];
+
+        function baziYear(date) {
+            const m = date.getMonth() + 1, d = date.getDate();
+            return (m < 2 || (m === 2 && d < 4)) ? date.getFullYear() - 1 : date.getFullYear();
+        }
+
+        function baziMonthBranch(date) {
+            const m = date.getMonth() + 1, d = date.getDate();
+            const mVal = m * 100 + d;
+            if (mVal < 204) return (mVal >= 106 ? 1 : 0); // Jan before 立春: >=106→丑月, else→子月
+            if (mVal < 306) return 2;  // 寅月
+            if (mVal < 405) return 3;  // 卯月
+            if (mVal < 506) return 4;  // 辰月
+            if (mVal < 606) return 5;  // 巳月
+            if (mVal < 707) return 6;  // 午月
+            if (mVal < 808) return 7;  // 未月
+            if (mVal < 908) return 8;  // 申月
+            if (mVal < 1008) return 9; // 酉月
+            if (mVal < 1107) return 10;// 戌月
+            if (mVal < 1207) return 11;// 亥月
+            if (mVal < 1306) return 0; // 子月 (大雪~小寒)
+            return 1;
+            return 1;
+        }
+
+        function jiaziPair(ganIdx, zhiIdx) {
+            for (let i = 0; i < 60; i++) {
+                if (i % 10 === ganIdx && i % 12 === zhiIdx) return i;
+            }
+            return 0;
+        }
+
+        // ── Pillar Calculations ──
+        function calcYearPillar(year) {
+            const idx = ((year - 4) % 60 + 60) % 60;
+            return { gan: STEMS[idx % 10], zhi: BRANCHES[idx % 12], ganIdx: idx % 10, zhiIdx: idx % 12, jiaziIdx: idx, zodiac: ZODIAC[idx % 12] };
+        }
+
+        function calcMonthPillar(yearGanIdx, monthBranch) {
+            const huTab = [2,4,6,8,0]; // 甲己→丙(2), 乙庚→戊(4), 丙辛→庚(6), 丁壬→壬(8), 戊癸→甲(0)
+            const huStart = huTab[yearGanIdx % 5];
+            const offset = (monthBranch + 10) % 12; // 寅=0
+            const ganIdx = (huStart + offset) % 10;
+            return { gan: STEMS[ganIdx], zhi: BRANCHES[monthBranch], ganIdx, zhiIdx: monthBranch, jiaziIdx: jiaziPair(ganIdx, monthBranch) };
+        }
+
+        function calcDayPillar(date) {
+            const base = new Date(1900, 0, 1);
+            const diff = Math.floor((date - base) / 86400000);
+            const idx = ((diff % 60) + 10 + 60) % 60;
+            return { gan: STEMS[idx % 10], zhi: BRANCHES[idx % 12], ganIdx: idx % 10, zhiIdx: idx % 12, jiaziIdx: idx };
+        }
+
+        function calcHourPillar(dayGanIdx, branchIdx) {
+            const wuTab = [0,2,4,6,8]; // 甲己→甲(0), 乙庚→丙(2), 丙辛→戊(4), 丁壬→庚(6), 戊癸→壬(8)
+            const ganIdx = (wuTab[dayGanIdx % 5] + branchIdx) % 10;
+            return { gan: STEMS[ganIdx], zhi: BRANCHES[branchIdx], ganIdx, zhiIdx: branchIdx, jiaziIdx: jiaziPair(ganIdx, branchIdx) };
+        }
+
+        // ── Five Elements & Useful God ──
+        function countElements(pillars) {
+            const c = { '木':0,'火':0,'土':0,'金':0,'水':0 };
+            for (const p of pillars) {
+                c[STEM_ELEM[p.ganIdx]]++;
+                c[BRAN_ELEM[p.zhiIdx]]++;
+            }
+            return c;
+        }
+
+        function calcUsefulGod(elements, pillars, dmIdx, monthBranch) {
+            const dmElem = STEM_ELEM[dmIdx];
+
+            // Find generator (印) and controller (官杀) of day master
+            let genElem = null, ctrlElem = null;
+            for (const [k, v] of Object.entries(ELEM_GEN)) { if (v === dmElem) genElem = k; }
+            for (const [k, v] of Object.entries(ELEM_KILL)) { if (v === dmElem) ctrlElem = k; }
+
+            const { isStrong } = calcDayMasterStrength(pillars, dmIdx);
+            const fireCnt = elements['火'] || 0;
+            const waterCnt = elements['水'] || 0;
+
+            // 1. 调候优先：火土燥局喜水润，金水寒局喜火暖
+            // 巳午未月火旺 → 身入火炉，无水不济
+            const isDry = [5, 6, 7].includes(monthBranch) && waterCnt <= 1;
+            // 亥子丑月水旺/寒 → 身入冰窖，无火不暖
+            const isCold = [0, 1].includes(monthBranch) && fireCnt <= 1;
+            if (isDry) return '水';
+            if (isCold) return '火';
+
+            // 2. 平衡用神：身强喜克泄耗，身弱喜生助
+            let candidates;
+            if (isStrong) {
+                // 身强喜：食伤(我生), 财(我克), 官杀(克我)
+                candidates = [ELEM_GEN[dmElem], ELEM_KILL[dmElem], ctrlElem].filter(Boolean);
+            } else {
+                // 身弱喜：印(生我), 比(同我)
+                candidates = [genElem, dmElem];
+            }
+
+            // Pick the weakest beneficial element
+            let best = candidates[0];
+            for (const c of candidates) {
+                if ((elements[c] || 0) < (elements[best] || 0)) best = c;
+            }
+            // Avoid picking an element that's already overly dominant
+            if ((elements[best] || 0) >= 3 && candidates.length > 1) {
+                best = candidates.find(c => (elements[c] || 0) < 3) || candidates[1];
+            }
+
+            return best || dmElem;
+        }
+
+        function calcDayMasterStrength(pillars, dmIdx) {
+            const dmElem = STEM_ELEM[dmIdx];
+            let genElem = null;
+            for (const [k, v] of Object.entries(ELEM_GEN)) {
+                if (v === dmElem) { genElem = k; break; }
+            }
+            let support = 0;
+            for (const p of pillars) {
+                if (STEM_ELEM[p.ganIdx] === dmElem || STEM_ELEM[p.ganIdx] === genElem) support++;
+                if (BRAN_ELEM[p.zhiIdx] === dmElem || BRAN_ELEM[p.zhiIdx] === genElem) support++;
+            }
+            return { support, isStrong: support >= 4 };
+        }
+
+        // ── Ten God ──
+        function getTenGod(dmIdx, otherIdx) {
+            const dm = dmIdx, ot = otherIdx;
+            const sameElem = STEM_ELEM[dm] === STEM_ELEM[ot];
+            const sameYY   = STEM_YY[dm] === STEM_YY[ot];
+            const dmGen    = ELEM_GEN[STEM_ELEM[dm]];
+            const dmKill   = ELEM_KILL[STEM_ELEM[dm]];
+
+            if (sameElem)            return sameYY ? '比肩' : '劫财';
+            if (dmGen === STEM_ELEM[ot])  return sameYY ? '食神' : '伤官';
+            if (dmKill === STEM_ELEM[ot]) return sameYY ? '偏财' : '正财';
+            if (ELEM_KILL[STEM_ELEM[ot]] === STEM_ELEM[dm]) return sameYY ? '七杀' : '正官';
+            if (ELEM_GEN[STEM_ELEM[ot]] === STEM_ELEM[dm])  return sameYY ? '偏印' : '正印';
+            return '--';
+        }
+
+        function dayTypeInfo(tenGod, isStrong) {
+            const labels = { good:'助力日', neutral:'平稳日', bad:'耗损日' };
+            if (isStrong) {
+                const m = {
+                    '食神':'good','伤官':'good','正财':'good','偏财':'good',
+                    '正官':'good','七杀':'neutral',
+                    '比肩':'bad','劫财':'bad','正印':'bad','偏印':'bad'
+                };
+                const t = m[tenGod] || 'neutral';
+                return { type: t, label: labels[t] };
+            } else {
+                const m = {
+                    '正印':'good','偏印':'good','比肩':'good',
+                    '食神':'neutral','伤官':'neutral','劫财':'neutral',
+                    '正官':'bad','七杀':'bad','正财':'bad','偏财':'bad'
+                };
+                const t = m[tenGod] || 'neutral';
+                return { type: t, label: labels[t] };
+            }
+        }
+
+        // ── Personalized Advice ──
+        function generateAdvice(tenGod, isStrong) {
+            const lib = {
+                '正印': { strong: { yi:['低调务实','减少依赖','独立行动','避免被过度帮助'], ji:['依赖他人','优柔寡断','过度期待照顾'] },
+                          weak:   { yi:['学习进修','读书写作','寻求指导','静心冥想'],         ji:['冲动冒险','过度劳累','与人争执'] } },
+                '偏印': { strong: { yi:['独立思考','打破常规','减少独处','多交流'],           ji:['钻牛角尖','过度研究','脱离现实'] },
+                          weak:   { yi:['独立思考','钻研技术','艺术创作','独处静修'],         ji:['盲从他人','过度社交','冒险投机'] } },
+                '食神': { strong: { yi:['创意输出','享受美食','艺术表达','轻松社交'],         ji:['压抑灵感','暴饮暴食','激烈竞争'] },
+                          weak:   { yi:['适度输出','控制精力消耗','放松心情'],                 ji:['过度消耗体力','无节制享乐','纵欲'] } },
+                '伤官': { strong: { yi:['创新突破','展示才华','技术攻关','打破常规'],         ji:['口无遮拦','得罪权威','过度批判'] },
+                          weak:   { yi:['收敛锋芒','谨慎表达','避免争论'],                     ji:['争强好胜','挑战规则','过度发泄'] } },
+                '正财': { strong: { yi:['稳健理财','努力工作','务实规划','储蓄投资'],         ji:['投机取巧','奢侈浪费','不劳而获'] },
+                          weak:   { yi:['控制开支','避免投资','量入为出'],                     ji:['大额消费','轻信理财','过度追求物质'] } },
+                '偏财': { strong: { yi:['拓宽财路','灵活应变','人际交往','商业洽谈'],         ji:['赌博投机','盲目扩张','轻信他人'] },
+                          weak:   { yi:['稳守现有','避免大额支出','谨慎投资'],                 ji:['冒险投机','盲目跟风','轻信理财'] } },
+                '比肩': { strong: { yi:['适度竞争','锻炼身体','保持独立空间'],                 ji:['与人对立','过度攀比','固执己见'] },
+                          weak:   { yi:['团队协作','互相帮助','公平竞争','运动健身'],         ji:['单打独斗','斤斤计较','与人攀比'] } },
+                '劫财': { strong: { yi:['控制支配欲','避免争执','考虑他人感受'],               ji:['大额消费','争强好胜','感情用事'] },
+                          weak:   { yi:['合作共赢','放下自我','慷慨分享','调整心态'],         ji:['大额花费','轻信合作','感情用事'] } },
+                '七杀': { strong: { yi:['积极进取','承担责任','磨炼意志','自我突破'],         ji:['鲁莽行事','过度压力','与人冲突'] },
+                          weak:   { yi:['保持低调','寻求庇护','暂避锋芒','积蓄力量'],         ji:['硬碰硬','冒险行动','承担超出能力的事'] } },
+                '正官': { strong: { yi:['遵守规则','踏实做事','自律自强','提升专业'],         ji:['投机取巧','挑战规则','冒险激进'] },
+                          weak:   { yi:['放低姿态','多听少说','避免正面冲突','韬光养晦'],     ji:['强出头','争权夺位','对抗权威'] } },
+            };
+            const entry = lib[tenGod];
+            if (!entry) return { yi:['顺其自然'], ji:['过度焦虑'] };
+            return entry[isStrong ? 'strong' : 'weak'];
+        }
+
+        // ── DaYun Calculation ──
+        function calcDaYun(bYearGanIdx, bMonthBranch, bDate, gender) {
+            const yStems = ['甲','丙','戊','庚','壬'];
+            const isYangYear = yStems.includes(STEMS[bYearGanIdx]);
+            const isMale = gender === 'male';
+            const forward = (isYangYear && isMale) || (!isYangYear && !isMale);
+
+            const year = bDate.getFullYear();
+            const m = bDate.getMonth() + 1, d = bDate.getDate();
+
+            const resolved = [];
+            for (const jq of JIEQI) {
+                let jqYear = year;
+                if (m <= 2 && jq.m >= 10) jqYear = year - 1;
+                if (m >= 11 && jq.m <= 2) jqYear = year + 1;
+                resolved.push({ date: new Date(jqYear, jq.m - 1, jq.d), bzi: jq.bzi });
+            }
+            resolved.sort((a, b) => a.date - b.date);
+
+            let jieqiDate = null;
+            if (forward) {
+                for (const r of resolved) {
+                    if (r.date > bDate) { jieqiDate = r.date; break; }
+                }
+                if (!jieqiDate) jieqiDate = new Date(year + 1, 1, 4);
+            } else {
+                for (let i = resolved.length - 1; i >= 0; i--) {
+                    if (resolved[i].date < bDate) { jieqiDate = resolved[i].date; break; }
+                }
+                if (!jieqiDate) jieqiDate = new Date(year - 1, 11, 7);
+            }
+
+            const diffDays = Math.abs(Math.round((jieqiDate - bDate) / 86400000));
+            const startAge = Math.round(diffDays / 3 * 10) / 10;
+
+            const yunCycles = [];
+            const mpGanIdx = calcMonthPillar(bYearGanIdx, bMonthBranch).ganIdx;
+            const mpZhiIdx = bMonthBranch;
+            let baseIdx = jiaziPair(mpGanIdx, mpZhiIdx);
+            for (let i = 0; i < 8; i++) {
+                let idx;
+                if (forward) {
+                    idx = (baseIdx + 1 + i) % 60;
+                } else {
+                    idx = ((baseIdx - 1 - i) % 60 + 60) % 60;
+                }
+                yunCycles.push({
+                    gan: STEMS[idx % 10],
+                    zhi: BRANCHES[idx % 12],
+                    age: Math.round((startAge + i * 10) * 10) / 10
+                });
+            }
+
+            return { direction: forward ? '顺排' : '逆排', startAge, cycles: yunCycles };
+        }
+
+        // ── Main Compute ──
+        function computeBazi(year, month, day, hour, gender) {
+            const date = new Date(year, month - 1, day);
+            const bYear = baziYear(date);
+            const bMonthBranch = baziMonthBranch(date);
+
+            const yp = calcYearPillar(bYear);
+            const mp = calcMonthPillar(yp.ganIdx, bMonthBranch);
+
+            // Traditional: 23:00+ hour uses next day; form hour is branch index 0-11,
+            // so early/late 子时 not distinguished here — uses same date.
+            let dayDate = new Date(year, month - 1, day);
+            const dp = calcDayPillar(dayDate);
+            const hp = calcHourPillar(dp.ganIdx, hour);
+
+            const pillars = [yp, mp, dp, hp];
+            const elements = countElements(pillars);
+            const dmElem = STEM_ELEM[dp.ganIdx];
+            const usefulGod = calcUsefulGod(elements, pillars, dp.ganIdx, bMonthBranch);
+            const strength = calcDayMasterStrength(pillars, dp.ganIdx);
+
+            const daYun = calcDaYun(yp.ganIdx, bMonthBranch, date, gender);
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const ageNow = Math.round((today - date) / (365.25 * 86400000) * 10) / 10;
+            let curYunIdx = -1;
+            for (let i = daYun.cycles.length - 1; i >= 0; i--) {
+                if (ageNow >= daYun.cycles[i].age) { curYunIdx = i; break; }
+            }
+
+            const todayDP = calcDayPillar(today);
+            const tenGod = getTenGod(dp.ganIdx, todayDP.ganIdx);
+            const dt = dayTypeInfo(tenGod, strength.isStrong);
+            const advice = generateAdvice(tenGod, strength.isStrong);
+
+            return { yp, mp, dp, hp, elements, dmElem, usefulGod, strength, daYun, todayDP, tenGod, dt, advice, bYear, curYunIdx, ageNow };
+        }
+
+        // ── Render ──
+        function renderBaziResult(data) {
+            const pillarsHtml = [
+                { label:'年柱', p: data.yp },
+                { label:'月柱', p: data.mp },
+                { label:'日柱', p: data.dp },
+                { label:'时柱', p: data.hp }
+            ].map(({label, p}) => {
+                const nayin = NAYIN[p.jiaziIdx];
+                return `<div class="pillar-box">
+                    <span class="pillar-label">${label}<br><span class="na-yin-tag">${nayin}</span></span>
+                    <span class="pillar-value">${p.gan}${p.zhi}</span>
+                </div>`;
+            }).join('');
+
+            document.getElementById('birth-pillars').innerHTML = pillarsHtml;
+            document.getElementById('val-na-yin').textContent = NAYIN[data.dp.jiaziIdx] || '--';
+            document.getElementById('day-master-badge').textContent = '日主 · ' + data.dp.gan + (data.strength.isStrong ? '（身强）' : '（身弱）');
+
+            const elemKeys = ['木','火','土','金','水'];
+            const elemCls  = ['wood','fire','earth','metal','water'];
+            const maxCount = Math.max(1, ...Object.values(data.elements));
+            for (let i = 0; i < elemKeys.length; i++) {
+                const v = data.elements[elemKeys[i]];
+                const pct = Math.round((v / maxCount) * 100);
+                const label = v + ' (' + (pct >= 80 ? '旺' : pct >= 50 ? '强' : pct >= 20 ? '弱' : '缺') + ')';
+                document.getElementById('el-' + elemCls[i]).textContent = elemKeys[i] + ' ' + label;
+                document.getElementById('g-' + elemCls[i]).style.height = '0%';
+            }
+
+            document.getElementById('val-useful-god').textContent = data.usefulGod;
+
+            const dy = data.daYun;
+            document.getElementById('dayun-dir').textContent = '（' + dy.direction + '）';
+            document.getElementById('val-start-age').textContent = dy.startAge + ' 岁';
+            const dyHtml = dy.cycles.map((c, i) => {
+                const isCurrent = i === data.curYunIdx;
+                const currentStyle = isCurrent
+                    ? 'border-color:var(--gold);background:rgba(197,168,128,0.12);box-shadow:0 0 8px rgba(197,168,128,0.25);position:relative;'
+                    : '';
+                const badge = isCurrent
+                    ? '<span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:0.55rem;background:var(--gold);color:#fff;padding:1px 6px;border-radius:10px;white-space:nowrap;letter-spacing:0.05em;">当前</span>'
+                    : '';
+                return '<span style="display:inline-block;border:1px solid var(--border-color);border-radius:4px;padding:6px 12px;font-size:0.82rem;text-align:center;' + currentStyle + '">' +
+                    badge +
+                    '<span style="display:block;font-weight:700;' + (isCurrent ? 'color:var(--gold);' : '') + '">' + c.gan + c.zhi + '</span>' +
+                    '<span style="display:block;font-size:0.65rem;color:var(--text-muted);">' + c.age + '岁</span></span>';
+            }).join('');
+            document.getElementById('dayun-cycles').innerHTML = dyHtml;
+
+            const badge = document.getElementById('day-type-badge');
+            badge.textContent = data.dt.label;
+            badge.className = 'day-type-badge ' + data.dt.type;
+
+            document.getElementById('ten-god-display').textContent = '「' + data.tenGod + '」';
+            document.getElementById('interaction-desc').textContent =
+                '今日天干' + data.todayDP.gan + '对你的日主' + data.dp.gan + '构成「' + data.tenGod + '」关系。';
+
+            const adviceHtml =
+                '<div class="advice-item"><span class="advice-icon yi">宜</span><span>' + data.advice.yi.join('、') + '</span></div>' +
+                '<div class="advice-item"><span class="advice-icon ji">忌</span><span>' + data.advice.ji.join('、') + '</span></div>';
+            document.getElementById('advice-section').innerHTML = adviceHtml;
+
+            const tipMap = {
+                good_strong: '今日对你的命局是 <strong>助力日</strong>，流日气场克制/泄耗过旺的日主，使其趋于平衡。宜顺势而为，积极行动。',
+                good_weak:   '今日对你的命局是 <strong>助力日</strong>，流日气场帮扶偏弱的日主，为你补充能量。宜把握时机，借力行事。',
+                neutral:     '今日对你的命局是 <strong>平稳日</strong>，流日气场对日主不偏不倚、不过不激。保持平常心，平稳推进手头事务即可。',
+                bad_strong:  '今日对你的命局是 <strong>耗损日</strong>，流日气场助长本已过旺的日主，易导致失衡。宜低调收敛，减少自我膨胀。',
+                bad_weak:    '今日对你的命局是 <strong>耗损日</strong>，流日气场克制本已偏弱的日主，消耗较大。宜低调行事，多从内在修养入手。'
+            };
+            const tipKey = data.dt.type === 'good' ? (data.strength.isStrong ? 'good_strong' : 'good_weak')
+                         : data.dt.type === 'bad'  ? (data.strength.isStrong ? 'bad_strong' : 'bad_weak')
+                         : 'neutral';
+            document.getElementById('personal-tip').innerHTML =
+                '<strong>命盘解析：</strong>你的日主为' + data.dp.gan + '（' + data.dmElem + '），日主' +
+                (data.strength.isStrong ? '身强' : '身弱') + '（印比' + data.strength.support + '/8），' +
+                '喜用<strong>' + data.usefulGod + '</strong>。' + tipMap[tipKey];
+
+            document.getElementById('bazi-result').classList.add('visible');
+
+            // Store data for pillar-click to access
+            document.getElementById('birth-pillars')._baziData = data;
+        }
+
+        // ── Personal Modal Open/Close ──
+        const personalModal = document.getElementById('personal-modal');
+        const closePersonalModal = document.getElementById('close-personal-modal');
+
+        document.getElementById('birth-pillars').addEventListener('click', function() {
+            const data = this._baziData;
+            if (!data) return;
+            personalModal.classList.add('active');
+            const elemCls = ['wood','fire','earth','metal','water'];
+            setTimeout(() => {
+                const max = Math.max(1, ...Object.values(data.elements));
+                for (let i = 0; i < elemCls.length; i++) {
+                    const elem = elemCls[i];
+                    const v = data.elements[['木','火','土','金','水'][i]];
+                    const pct = Math.round((v / max) * 100);
+                    document.getElementById('g-' + elem).style.height = pct + '%';
+                }
+            }, 100);
+        });
+
+        closePersonalModal.addEventListener('click', () => {
+            personalModal.classList.remove('active');
+            ['wood','fire','earth','metal','water'].forEach(e => {
+                document.getElementById('g-' + e).style.height = '0%';
+            });
+        });
+
+        personalModal.addEventListener('click', (e) => {
+            if (e.target === personalModal) closePersonalModal.click();
+        });
+
+        // ── Month / Day selectors ──
+        function populateMonthDaySelectors() {
+            const monthSel = document.getElementById('birth-month');
+            const daySel = document.getElementById('birth-day');
+            monthSel.innerHTML = '';
+            for (let m = 1; m <= 12; m++) {
+                const opt = document.createElement('option');
+                opt.value = m;
+                opt.textContent = m + '月';
+                monthSel.appendChild(opt);
+            }
+            function fillDays() {
+                const y = parseInt(document.getElementById('birth-year').value) || 1990;
+                const m = parseInt(monthSel.value) || 1;
+                const daysIn = new Date(y, m, 0).getDate();
+                const cur = parseInt(daySel.value) || 1;
+                daySel.innerHTML = '';
+                for (let d = 1; d <= daysIn; d++) {
+                    const opt = document.createElement('option');
+                    opt.value = d;
+                    opt.textContent = d + '日';
+                    daySel.appendChild(opt);
+                }
+                if (cur <= daysIn) daySel.value = cur;
+            }
+            document.getElementById('birth-year').addEventListener('input', fillDays);
+            monthSel.addEventListener('change', fillDays);
+            fillDays();
+        }
+
+        // ── Page Switching ──
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById('tab-' + pageId.replace('page-', '')).classList.add('active');
+        }
+
+        document.getElementById('tab-general').addEventListener('click', () => switchPage('page-general'));
+        document.getElementById('tab-personal').addEventListener('click', () => switchPage('page-personal'));
+
+        // ── Form Submit ──
+        function saveBirthData(data) {
+            localStorage.setItem('opencode_bazi_birth', JSON.stringify(data));
+        }
+
+        function loadBirthData() {
+            const saved = localStorage.getItem('opencode_bazi_birth');
+            return saved ? JSON.parse(saved) : null;
+        }
+
+        function fillForm(data) {
+            if (!data) return;
+            document.getElementById('birth-year').value = data.year;
+            document.getElementById('birth-month').value = data.month;
+            // Re-populate days and set
+            const m = data.month;
+            const y = data.year;
+            const daysIn = new Date(y, m, 0).getDate();
+            const daySel = document.getElementById('birth-day');
+            daySel.innerHTML = '';
+            for (let d = 1; d <= daysIn; d++) {
+                const opt = document.createElement('option');
+                opt.value = d; opt.textContent = d + '日';
+                daySel.appendChild(opt);
+            }
+            daySel.value = Math.min(data.day, daysIn);
+            document.getElementById('birth-hour').value = data.hour;
+            document.getElementById('birth-gender').value = data.gender;
+            document.getElementById('saved-hint').style.display = 'block';
+        }
+
+        document.getElementById('btn-analyze').addEventListener('click', () => {
+            const year = parseInt(document.getElementById('birth-year').value);
+            const month = parseInt(document.getElementById('birth-month').value);
+            const day = parseInt(document.getElementById('birth-day').value);
+            const hour = parseInt(document.getElementById('birth-hour').value);
+            const gender = document.getElementById('birth-gender').value;
+
+            if (!year || !month || !day || isNaN(hour) || !gender) {
+                alert('请填写完整的出生信息（含性别）');
+                return;
+            }
+
+            saveBirthData({ year, month, day, hour, gender });
+            document.getElementById('saved-hint').style.display = 'block';
+
+            const result = computeBazi(year, month, day, hour, gender);
+            renderBaziResult(result);
+        });
+
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            if (confirm('确定清除保存的数据吗？')) {
+                localStorage.removeItem('opencode_bazi_birth');
+                document.getElementById('birth-year').value = 1990;
+                document.getElementById('birth-month').value = 6;
+                document.getElementById('birth-hour').value = 6;
+                document.getElementById('saved-hint').style.display = 'none';
+                document.getElementById('bazi-result').classList.remove('visible');
+                // Re-populate days
+                document.getElementById('birth-month').dispatchEvent(new Event('change'));
+            }
+        });
+
+        // ── Init ──
+        populateMonthDaySelectors();
+        const saved = loadBirthData();
+        if (saved && saved.gender) {
+            fillForm(saved);
+            try {
+                const result = computeBazi(saved.year, saved.month, saved.day, saved.hour, saved.gender);
+                renderBaziResult(result);
+            } catch(e) { console.warn('Auto-load Bazi failed', e); }
+        } else if (saved) {
+            fillForm(saved);
+        }
+    </script>
+</body>
+</html>
